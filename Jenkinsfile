@@ -27,6 +27,14 @@ pipeline {
                     app.push('latest')
                 }    
             }
-        }        
+        } 
+        stage('Build JRE11 Image') {
+            steps {
+                script {
+                    app = docker.build(env.ECR_NAMESPACE + '/qglobal/base-jre-11', 'jre11-base')
+                    app.push('latest')
+                }    
+            }
+        }            
     }
 }
