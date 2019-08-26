@@ -9,6 +9,7 @@ pipeline {
                 script {
                     app = docker.build(env.ECR_NAMESPACE + '/q-deployment-support/awscli', 'aws-cli')
                     app.push("1.0")
+                    app.push("latest")
                 }    
             }
         }      
@@ -16,7 +17,8 @@ pipeline {
             steps {
                 script {
                     app = docker.build(env.ECR_NAMESPACE + '/qscoring/product-provider', 'products-provider')
-                    app.push('latest')
+                    app.push('1.0')
+                    app.push("latest")                    
                 }    
             }
         }          
@@ -24,7 +26,8 @@ pipeline {
             steps {
                 script {
                     app = docker.build(env.ECR_NAMESPACE + '/qglobal/credential-provider', 'credentials-provider')
-                    app.push('latest')
+                    app.push('1.0')
+                    app.push("latest")                    
                 }    
             }
         } 
@@ -32,7 +35,8 @@ pipeline {
             steps {
                 script {
                     app = docker.build(env.ECR_NAMESPACE + '/qglobal/base-jre-11', 'jre11-base')
-                    app.push('latest')
+                    app.push('1.0')
+                    app.push("latest")                    
                 }    
             }
         }            
