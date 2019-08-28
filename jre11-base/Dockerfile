@@ -10,5 +10,8 @@ EXPOSE 8080
 # Copy the runner
 COPY app-runner.sh app-runner.sh
 
+# Set env variable for auth
+ENV SECURITY_JWT_KEY-STORE=/var/app/identity/public-key.txt
+
 # Start the app
 ENTRYPOINT sh app-runner.sh

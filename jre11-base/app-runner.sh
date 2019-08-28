@@ -17,4 +17,5 @@ cat /var/app/secrets/* >> app.properties 2> /dev/null
 java -jar app.jar \
           --spring.profiles.active=$APPLICATION_ENVIRONMENT \
           --server.servlet.context-path=$CONTEXT_ROOT \
+          --server.port=8080 \
           --spring.config.additional-location=./app.properties

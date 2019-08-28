@@ -3,7 +3,9 @@ FROM 585307327397.dkr.ecr.ca-central-1.amazonaws.com/q-deployment-support/awscli
 
 # Expose this volume for qglobal app
 RUN mkdir -p /var/app/secrets
+RUN mkdir -p /var/app/identity
 VOLUME  /var/app/secrets
+VOLUME  /var/app/identity
 
 # Workspace for the script
 WORKDIR /var/app

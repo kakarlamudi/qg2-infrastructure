@@ -22,10 +22,10 @@ pipeline {
                 }    
             }
         }          
-        stage('Build Credentials-Provider Image') {
+        stage('Build Secrets-Provider Image') {
             steps {
                 script {
-                    app = docker.build(env.ECR_NAMESPACE + '/qglobal/credential-provider', 'credentials-provider')
+                    app = docker.build(env.ECR_NAMESPACE + '/qglobal/secret-provider', 'secrets-provider')
                     app.push('1.0')
                     app.push("latest")                    
                 }    
