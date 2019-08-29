@@ -18,4 +18,5 @@ java -jar app.jar \
           --spring.profiles.active=$APPLICATION_ENVIRONMENT \
           --server.servlet.context-path=$CONTEXT_ROOT \
           --server.port=8080 \
+          --security.jwt.key-store=file:/var/app/identity/private-key.jks \
           --spring.config.additional-location=./app.properties
