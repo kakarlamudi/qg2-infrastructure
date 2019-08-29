@@ -13,6 +13,10 @@ touch app.properties
 # Get the db secrets & store in app.properties
 cat /var/app/secrets/* >> app.properties 2> /dev/null
 
+cat app.properties
+
+ls -al /var/app/identity
+
 # Start the spring boot app with embedded tomcat
 java -jar app.jar \
           --spring.profiles.active=$APPLICATION_ENVIRONMENT \
