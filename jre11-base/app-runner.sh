@@ -19,4 +19,7 @@ java -jar app.jar \
           --server.servlet.context-path=$CONTEXT_ROOT \
           --server.port=8080 \
           --security.oauth2.resource.public-key=/var/app/identity/public-key.txt \
+          --management.endpoints.web.base-path=/monitor \
+		  --management.endpoints.web.path-mapping.health=health \
+		  --spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true \
           --spring.config.additional-location=./app.properties
