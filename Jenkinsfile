@@ -31,6 +31,15 @@ pipeline {
                 }    
             }
         } 
+        stage('Build Flyway-Scripts-Provider Image') {
+            steps {
+                script {
+                    app = docker.build(env.ECR_NAMESPACE + '/qglobal/flyway-scripts-provider', 'flyway-scripts-provider')
+                    app.push('1.0')
+                    app.push("latest")                    
+                }    
+            }
+        }         
         stage('Build JRE11 Image') {
             steps {
                 script {
