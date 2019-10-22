@@ -1,0 +1,60 @@
+pipeline {
+    agent {
+        docker {
+            image 'fabfuel/ecs-deploy:1.7.1'
+        }
+    }
+    options {
+        timeout(time: 1, unit: 'DAYS')
+    }    
+    parameters{
+        string(defaultValue: "", description: 'Docker Image with tag', name: 'DOCKER_IMAGE')
+    }
+    environment {
+        REGION          = 'ca-central-1'
+        SERVICE         = "${SERVICE_NAME}"
+        CONTAINER_NAME  = "${CONTAINER_NAME}"
+        ECR_NAMESPACE   = '585307327397.dkr.ecr.ca-central-1.amazonaws.com'
+    }   
+    stages {      
+        stage('Release To Dev') {
+            steps {
+                deploy('qglobal-dev', env.DOCKER_IMAGE)
+            }
+        }
+        stage('QA Approval') { 
+            steps{
+                input(message: "Promote to QA?")
+            }
+        }
+        stage('Release To QA') {  
+            steps {
+                deploy('qglobal-qa', env.DOCKER_IMAGE)
+            }
+        }
+        stage('STG Approval') { 
+            steps{
+                input(message: "Promote to STG?")
+            }
+        }
+        stage('Release To STG') {  
+            steps {
+                deploy('qglobal-stg', env.DOCKER_IMAGE)
+            }
+        }
+        stage('PROD Approval') { 
+            steps{
+                input(message: "Promote to PROD?")
+            }
+        }        
+        stage('Release To PROD') { 
+            steps {
+                deploy('qglobal-prd', env.DOCKER_IMAGE)
+            }
+        }        
+    }
+}
+
+def deploy(def clusterName, def dockerImage){
+    sh "ecs deploy ${clusterName} ${SERVICE} --region ${REGION} --timeout 600 --image ${CONTAINER_NAME} ${ECR_NAMESPACE}/${dockerImage}"
+}

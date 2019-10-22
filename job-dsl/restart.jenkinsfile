@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    parameters{
+        choice(
+            description: 'Application Cluster', 
+            name: 'CLUSTER', 
+            choices: ['qglobal-dev', 'qglobal-qa', 'qglobal-stg', 'qglobal-prd']
+        )
+    }
+    environment {
+        REGION = 'ca-central-1'
+        SERVICE= "${SERVICE_NAME}"
+    }   
+    stages {
+        stage('Restart Service') {
+            steps {
+                script {
+                    currentBuild.description = env.CLUSTER
+                }
+                sh 'aws ecs update-service --region $REGION --cluster $CLUSTER --service $SERVICE --force-new-deployment > /dev/null'
+                sh 'aws ecs wait services-stable --region $REGION --cluster $CLUSTER --service $SERVICE'
+            }
+        }              
+    }
+}

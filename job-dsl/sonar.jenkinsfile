@@ -1,0 +1,22 @@
+pipeline {
+    agent any 
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    git credentialsId: 'bitbucket-user', url: "${BITBUCKET_URL}"
+                }    
+            }
+        }
+        stage('Compile') {
+            steps {
+                sh 'mvn clean compile'
+            }
+        }            
+        stage('Run sonar') {
+            steps {
+                sh 'mvn sonar:sonar -Dsonar.host.url=http://localhost:8080 -Dsonar.login=805c9b9d30ee21d164ab3685123f4e0981a4740e'
+            }
+        }     
+    }
+}
