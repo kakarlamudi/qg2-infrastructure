@@ -219,7 +219,7 @@ def createJob(def jobDetails) {
           def scr = "def SERVICE_NAME='" + jobDetails["ecs-service-name"] + "';\n";
           scr = scr + "def CONTAINER_NAME='" + jobDetails["ecs-container-name"] + "';\n\n";
 
-          def deploymentFile = 'deployment.jenkinsfile'
+          def deploymentFile = './deployment.jenkinsfile'
           if(jobDetails.containsKey("deploymentType")){
             deploymentFile = jobDetails['deploymentType'] 
           }
@@ -235,7 +235,7 @@ def createJob(def jobDetails) {
       definition {
         cps {
           def scr = "def SERVICE_NAME='" + jobDetails["ecs-service-name"] + "';\n";
-          script(scr + readFileFromWorkspace('restart.jenkinsfile'))
+          script(scr + readFileFromWorkspace('./restart.jenkinsfile'))
           sandbox()     
         }
       }
@@ -246,7 +246,7 @@ def createJob(def jobDetails) {
       definition {
         cps {
           def scr = "def BITBUCKET_URL='" + jobDetails["source-job-git"] + "';\n";
-          script(scr + readFileFromWorkspace('sonar.jenkinsfile'))
+          script(scr + readFileFromWorkspace('./sonar.jenkinsfile'))
           sandbox()     
         }
       }
