@@ -48,6 +48,15 @@ pipeline {
                     app.push("latest")                    
                 }    
             }
-        }            
+        }  
+        stage('Build Slang Bundle Provider Image') {
+            steps {
+                script {
+                    app = docker.build(env.ECR_NAMESPACE + '/qglobal/slang-bundle-provider', 'slang-bundle-provider')
+                    app.push('1.0')
+                    app.push("latest")                    
+                }    
+            }
+        }                    
     }
 }
